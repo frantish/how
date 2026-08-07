@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")" && pwd)"
+TOPICS_DIR="${ROOT}/topics"
+
+if [[ $# -eq 0 ]]; then
+    echo "Usage: how <topic>"
+    echo
+    echo "Available topics:"
+    find "${TOPICS_DIR}" -maxdepth 1 -type f -name '*.md' -printf '  %f\n' \
+        | sed 's/\.md$//' \
+        | sort
+    exit 0
+fi
+
+TOPIC="$1"
+FILE="${TOPICS_DIR}/${TOPIC}.md"
+
+if [[ ! -f "${FILE}" ]]; then
+    echo "Unknown topic: ${TOPIC}" >&2
+    echo "Run 'how' to list available topics." >&2
+    exit 1
+fi
+
+awk '
+BEGIN {
+    in_code = 0
+    blank = 0
+}
+
+/^```/ {
+    in_code = !in_code
+    next
+}
+
+in_code {
+    if (!blank)
+        print ""
+    print "    " $0
+    blank = 0
+    next
+}
+
+/^# / {
+    if (!blank)
+        print ""
+    print toupper(substr($0, 3))
+    blank = 0
+    next
+}
+
+/^## / {
+    if (!blank)
+        print ""
+    print toupper(substr($0, 4))
+    blank = 0
+    next
+}
+
+/^### / {
+    if (!blank)
+        print ""
+    print substr($0, 5)
+    blank = 0
+    next
+}
+
+/^[[:space:]]*$/ {
+    if (!blank) {
+        print ""
+        blank = 1
+    }
+    next
+}
+
+{
+    blank = 0
+    gsub(/`/, "")
+    print
+}
+' "${FILE}"
