@@ -48,6 +48,21 @@ Výsledok:
 `origin  -> GitHub`
 `forgejo -> Forgejo`
 ---
+## BOOTSTRAP HOW
+
+Stiahni `how` do `~/apps/how` a nainštaluj príkaz:
+`mkdir -p ~/apps`
+`git clone https://github.com/frantish/how.git ~/apps/how`
+`cd ~/apps/how`
+`./install.sh`
+
+Test:
+`how`
+
+Aktualizácia neskôr:
+`cd ~/apps/how`
+`git pull`
+---
 ## CHECK
 
 Remotes:
