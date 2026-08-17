@@ -1,16 +1,9 @@
-HOW: install app globally from Git
-
-Goal:
-  One installation usable by all local users.
+HOW: install app globally from Git - for all local users.
 
 Notes:
   - /usr/local/bin is normally in PATH for all users.
   - Do not install separate copies into every user's ~/.local/bin.
   - Keep application files in /opt and expose only the executable via /usr/local/bin.
-
-Example:
-  app = how
-  repo = https://github.com/frantish/how.git
 
 Install:
   sudo git clone https://github.com/frantish/how.git /opt/how
