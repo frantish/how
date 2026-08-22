@@ -34,3 +34,5 @@ nordvpn meshnet peer fileshare deny <PEER>
 nordvpn set killswitch off
 nordvpn set lan-discovery enable
 nordvpn set meshnet on
+nordvpn status - basic info
+nordvpn settings - viac info
